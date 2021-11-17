@@ -189,18 +189,24 @@ public class DefaultApplicationDeployer extends AbstractDeployer<ApplicationMode
             if (initialized.get()) {
                 return;
             }
+
+            // 服务关闭钩子，销毁资源
             // register shutdown hook
             registerShutdownHook();
 
+            // 启动配置中心
             startConfigCenter();
 
             loadApplicationConfigs();
 
+            // 初始化ModuleDeployer组件
             initModuleDeployers();
 
+            // 启动元数据中心
             // @since 2.7.8
             startMetadataCenter();
 
+            // 初始化元数据
             initMetadataService();
 
             initialized.set(true);

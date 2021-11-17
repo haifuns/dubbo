@@ -609,6 +609,7 @@ public abstract class AbstractConfig implements Serializable {
 
             assignProperties(this, environment, subProperties, subPropsConfiguration);
 
+            // 固定前缀+包名+服务接口名
             // process extra refresh of sub class, e.g. refresh method configs
             processExtraRefresh(preferredPrefix, subPropsConfiguration);
 

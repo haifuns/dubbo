@@ -309,6 +309,7 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
 
             // Auto create MethodConfig/ArgumentConfig according to config props
             Map<String, String> configProperties = subPropsConfiguration.getProperties();
+            // 每个Method对应一个MethodConfig
             Method[] methods = interfaceClass.getMethods();
             for (Method method : methods) {
                 if (ConfigurationUtils.hasSubProperties(configProperties, method.getName())) {
@@ -326,6 +327,7 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
                         if (getArgumentByIndex(methodConfig, i) == null &&
                             hasArgumentConfigProps(configProperties, methodConfig.getName(), i)) {
 
+                            // 每个Method arg对应一个argumentConfig配置
                             ArgumentConfig argumentConfig = new ArgumentConfig();
                             argumentConfig.setIndex(i);
                             methodConfig.addArgument(argumentConfig);

@@ -29,6 +29,7 @@ import org.apache.dubbo.config.context.ModuleConfigManager;
 import java.util.Set;
 
 /**
+ * 门面模式，用来获取组件
  * Model of a service module
  */
 public class ModuleModel extends ScopeModel {

@@ -34,6 +34,8 @@ public class Application {
         }
     }
 
+    private static final String ZK_URL = "zookeeper://192.168.0.13:2181";
+
     private static boolean isClassic(String[] args) {
         return args.length > 0 && "classic".equalsIgnoreCase(args[0]);
     }
@@ -45,19 +47,26 @@ public class Application {
 
         DubboBootstrap bootstrap = DubboBootstrap.getInstance();
         bootstrap.application(new ApplicationConfig("dubbo-demo-api-provider"))
-            .registry(new RegistryConfig("zookeeper://127.0.0.1:2181"))
+            .registry(new RegistryConfig(ZK_URL))
             .service(service)
             .start()
             .await();
     }
 
     private static void startWithExport() throws InterruptedException {
+        // 服务提供者
         ServiceConfig<DemoServiceImpl> service = new ServiceConfig<>();
+        // 要对外提供的接口
         service.setInterface(DemoService.class);
+        // 接口实现类
         service.setRef(new DemoServiceImpl());
+        // 服务提供者名称
         service.setApplication(new ApplicationConfig("dubbo-demo-api-provider"));
-        service.setRegistry(new RegistryConfig("zookeeper://127.0.0.1:2181"));
-        service.setMetadataReportConfig(new MetadataReportConfig("zookeeper://127.0.0.1:2181"));
+        // zk注册中心地址
+        service.setRegistry(new RegistryConfig(ZK_URL));
+        // 上报元数据地址
+        service.setMetadataReportConfig(new MetadataReportConfig(ZK_URL));
+        // 对外提供服务
         service.export();
 
         System.out.println("dubbo service started");
